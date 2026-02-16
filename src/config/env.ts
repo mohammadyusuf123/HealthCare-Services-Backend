@@ -1,0 +1,23 @@
+import dotenv from "dotenv"
+import { EnvConfig } from "../types"
+
+dotenv.config()
+
+const loadEnv = (): EnvConfig => {
+    const requiredEnv = ['NODE_ENV', 'PORT', 'DATABASE_URL', 'BETTER_AUTH_URL', 'BETTER_AUTH_SECRET', 'APP_URL']
+    requiredEnv.forEach(env => {
+        if (!process.env[env]) {
+            throw new Error(`Missing environment variable: ${env}`)
+        }
+    })
+    const env = {
+        NODE_ENV: process.env.NODE_ENV as string,
+        PORT: process.env.PORT as string,
+        DATABASE_URL: process.env.DATABASE_URL as string,
+        BETTER_AUTH_URL: process.env.BETTER_AUTH_URL as string,
+        BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET as string,
+        APP_URL: process.env.APP_URL as string
+    }
+    return env
+}
+export const envVars = loadEnv()

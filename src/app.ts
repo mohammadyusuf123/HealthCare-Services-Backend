@@ -3,7 +3,6 @@ import { prisma } from "./lib/prisma";
 import router from "./modules/routes";
 
 const app: Application = express();
-const port = 5000; // The port your express server will be running on.
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));

@@ -16,6 +16,17 @@ export class AuthController{
             message:"Patient created successfully",
             data:result},res)
        })
+
+       //login patient
+       public login=catchAsync(async(req:Request,res:Response)=>{
+        const payload=req.body
+        console.log(payload);
+        const result=await  AuthServices.login(payload.email,payload.password)
+        sendResponse({statusCode:200,
+         success:true,
+         message:"Patient login successfully",
+         data:result},res)
+    })
 }
 
 export default new AuthController
