@@ -18,7 +18,8 @@ const data=await auth.api.signUpEmail({
 if(!data){
   throw new Error("Failed to create patient")
 }
-const patient=prisma.$transaction(async (tx)=>{
+try {
+  const patient=prisma.$transaction(async (tx)=>{
   const patientTx=await tx.patient.create({
     data: {
       userId:data.user.id,
@@ -33,6 +34,16 @@ return{
   ...data,
   patient
 }
+} catch (error) {
+  console.log(error);
+    await prisma.user.delete({
+      where: {
+        id: data.user.id,
+      },
+    })
+  throw new Error("Failed to create patient")
+}
+
 
 }
 //login patient
