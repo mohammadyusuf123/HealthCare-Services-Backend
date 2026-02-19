@@ -1,3 +1,5 @@
+import { Gender } from "../../generated/prisma/enums"
+
 //create pataient
 export interface createPatient {
     userId: string
@@ -27,6 +29,7 @@ export interface createDoctor {
     password: string,
      doctor: {
     userId: string,
+     designation: string;
     name: string,
     email: string,
     phone?: string,
@@ -37,7 +40,7 @@ export interface createDoctor {
     registrationNumber: string,
     qualification: string,
     appointmentFee: number,
-    gender: string,
+    gender: Gender,
     currentWorkingPlace: string,
   },
   specialties: string[],
