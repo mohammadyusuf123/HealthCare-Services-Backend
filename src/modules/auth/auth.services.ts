@@ -2,6 +2,8 @@ import { createPatient } from "../../types";
 import { auth } from "../../lib/auth";
 import { UserStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
+import { tokenUtils } from "../../utils/token";
+import { role } from "better-auth/plugins";
 
 
 export class AuthServices{
@@ -63,7 +65,30 @@ if(data.user.status===UserStatus.BLOCKED){
 if(data.user.status===UserStatus.DELETED){
   throw new Error("Your account is deleted")
 }
-return data
+const accessToken= tokenUtils.getAccessToken({
+  id:data.user.id,
+  email:data.user.email,
+  role:data.user.role,
+  name:data.user.name,
+  status:data.user.status,
+  isDeleted:data.user.isDeleted,
+  emailVerified:data.user.emailVerified,
+
+})
+const refreshToken= tokenUtils.getAccessToken({
+  id:data.user.id,
+  email:data.user.email,
+  role:data.user.role,
+  name:data.user.name,
+  status:data.user.status,
+  isDeleted:data.user.isDeleted,
+  emailVerified:data.user.emailVerified,
+
+})
+return {
+  ...data,
+  accessToken,
+  refreshToken}
 }
 }
 
