@@ -3,7 +3,7 @@ import { prisma } from "./lib/prisma";
 import router from "./modules/routes";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { notFound } from "./config/notFound";
-
+import cookieParser from "cookie-parser"
 const app: Application = express();
 
 // Enable URL-encoded form data parsing
@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-
+app.use(cookieParser())
 
 //API Routes
 app.use('/api', router)
